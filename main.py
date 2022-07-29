@@ -74,9 +74,9 @@ def DestoyTweets(oauth_token_secret,oauth_token,ids):
                    sig,time1, oauth_token)}
     req1 = requests.post("https://api.twitter.com/1.1/statuses/destroy/"+ids+".json", headers=headers)
     if req1.status_code == 200:
-        tqdm.tqdm.write("sucsess delete",end='\r')
+        tqdm.tqdm.write("successfully delete the tweet",end='\r')
     elif "Could not authenticate you." in req1.text:
-        raise ValueError("raise error to retry send the requets")
+        raise ValueError("raise error to retry send the requests")
     else:
         tqdm.tqdm.write("error")
         tqdm.tqdm.write(req1.text,end='\r')
@@ -121,7 +121,7 @@ def nextone(id,oauth_token_secret,oauth_token):
     if json.loads(req1.text)["twitter_objects"]['tweets'] != {}:
         for xx in json.loads(req1.text)["twitter_objects"]["tweets"]:
             alltweets[xx] = timm.mktime(datetime.datetime.strptime(json.loads(req1.text)["twitter_objects"]["tweets"][xx]["created_at"],"%a %b %d %X %z %Y").timetuple())
-        print("info : still process moving to next one")
+        print("info : still processing moving to next one page each page limit tweets are 40 ")
         nextone(id,oauth_token_secret,oauth_token)
 
 def main():
@@ -144,7 +144,7 @@ def main():
 
                 while True:
                     print(
-                        "\nchose the options \n1 for delete all tweets \n2 for delete any teweets between two date ex : 2016-11-15 2011-10-07 \n3 for delete any tweets before the date   ex : 2016-11-15  ")
+                        "\nchose the options \n1 for delete all tweets \n2 for delete any tweets between two date ex : 2016-11-15 2011-10-07 \n3 for delete any tweets before the date   ex : 2016-11-15  ")
                     ii = input("enter the number: ")
                     if ii == "1":
                         for xx in sortweets.keys():
