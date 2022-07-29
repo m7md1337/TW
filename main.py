@@ -128,7 +128,6 @@ def main():
     user = input("enter username: ")
     password = input("enter passowrd: ")
     trylogin = login(user,password)
-    print(trylogin.text)
     if trylogin.status_code == 401:
         print("are you sure about login information ?")
     elif trylogin.status_code == 200:
@@ -175,7 +174,8 @@ def main():
                 for ids in tqdm.tqdm(selecttweets):
                     DestoyTweets(oauth_token_secret,auth_token,ids)
                 print("cool all tweets select are deleted")
-            print("[Info] No tweet found")
+            else:
+                print("[Info] No tweet found")
         except Exception as dd:
             print("oops something wrong error:  "+str(dd))
 
